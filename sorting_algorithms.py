@@ -1,4 +1,10 @@
 def selection_sort(alist):
+    '''Performs a selection sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+    
     comparisons = 0
     swaps = 0
     sorted_items = 0
@@ -16,6 +22,12 @@ def selection_sort(alist):
     print('Selection sort: {} comparisons, {} swaps'.format(comparisons, swaps))
 
 def bubble_sort(alist):
+    '''Performs a bubble sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+    
     comparisons = 0
     swaps = 0
     sorted_items = 0
@@ -33,6 +45,12 @@ def bubble_sort(alist):
     print('Bubble sort: {} comparisons, {} swaps'.format(comparisons, swaps))
 
 def insertion_sort(alist):
+    '''Performs an insertion sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+    
     comparisons = 0
     swaps = 0
     for i in range(1, len(alist)):
