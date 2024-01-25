@@ -66,6 +66,31 @@ def insertion_sort(alist):
                 comparisons += 1
     print('Insertion sort: {} comparisons, {} swaps'.format(comparisons, swaps))
 
-alist = [5,4,3,2,1]
-selection_sort(alist)
+def shell_sort(alist):
+    '''Performs a shell sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+    comparisons = 0
+    swaps = 0
+    gap = len(alist) // 2
+    while gap > 0:
+        for pos_start in range(gap):
+            for i in range(pos_start+gap, len(alist), gap):
+                curr_value = alist[i]
+                curr_position = i
+                comparisons += 1
+                while curr_position >= gap and alist[curr_position-gap] > curr_value:
+                    swaps += 1
+                    alist[curr_position] = alist[curr_position-gap]
+                    curr_position = curr_position - gap
+                    if curr_position >= gap:
+                        comparisons += 1
+                alist[curr_position] = curr_value
+        gap = gap // 2
+    print('Shell sort: {} comparisons, {} swaps'.format(comparisons, swaps))
+    
+alist = [2, 1, 3, 4, 5]
+shell_sort(alist)
 print(alist)
