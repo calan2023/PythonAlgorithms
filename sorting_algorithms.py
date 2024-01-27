@@ -90,7 +90,48 @@ def shell_sort(alist):
                 alist[curr_position] = curr_value
         gap = gap // 2
     print('Shell sort: {} comparisons, {} swaps'.format(comparisons, swaps))
+
+def merge_sort(alist):
+    '''Performs a merge sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+
+    comparisons = 0
+    print("Splitting", alist)
+    if len(alist) > 1:
+        mid = len(alist) // 2
+        left_half = alist[:mid]
+        right_half = alist[mid:]
+
+        comparisons += merge_sort(left_half)
+        comparisons += merge_sort(right_half)
+
+        i, j, k = 0, 0, 0
+        while i < len(left_half) and j < len(right_half):
+            comparisons += 1
+            if left_half[i] <= right_half[j]:
+                alist[k] = left_half[i]
+                i += 1
+            else:
+                alist[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            alist[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            alist[k] = right_half[j]
+            j += 1
+            k += 1
+    print("Merging", alist)
+    print('Merge sort: {} comparisons'.format(comparisons))
+    return comparisons
     
-alist = [2, 1, 3, 4, 5]
-shell_sort(alist)
+alist = [5, 2, 3, 4, 1]
+merge_sort(alist))
 print(alist)
