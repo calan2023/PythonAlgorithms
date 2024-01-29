@@ -131,7 +131,71 @@ def merge_sort(alist):
     print("Merging", alist)
     print('Merge sort: {} comparisons'.format(comparisons))
     return comparisons
+
+def quick_sort(alist, first=None, last=None):
+    '''Performs a merge sort on a list.
+
+    Args:
+        alist (list): The list that will be sorted
+        first (int): The index of the first item in the list slice
+            (default is None)
+        last (int): The index of the last item in the list slice
+            (default is None)
+    '''
     
-alist = [5, 2, 3, 4, 1]
-merge_sort(alist))
+    comparisons = 0
+    swaps = 0
+    
+    if first is None:
+        first = 0
+    if last is None:
+        last = len(alist) - 1
+        
+    if first < last:
+        pivot_val = alist[first]
+        left_mark = first + 1
+        right_mark = last
+        done = False
+
+        while not done:
+            if left_mark <= right_mark:
+                comparisons += 1
+            while left_mark <= right_mark and alist[left_mark] <= pivot_val:
+                left_mark = left_mark + 1
+                if left_mark <= right_mark:
+                    comparisons += 1
+
+            if left_mark <= right_mark:
+                comparisons += 1
+            while left_mark <= right_mark and alist[right_mark] >= pivot_val:
+                right_mark = right_mark - 1
+                if left_mark <= right_mark:
+                    comparisons += 1
+                    
+            if right_mark < left_mark:
+                done = True
+            else:
+                swaps += 1
+                alist[left_mark], alist[right_mark] = alist[right_mark], alist[left_mark]
+                left_mark += 1
+                right_mark -= 1
+
+        if first != right_mark:
+            swaps += 1
+        alist[first], alist[right_mark] = alist[right_mark], alist[first]
+        split = right_mark
+        
+        comps_swaps = quick_sort(alist, first, split - 1)
+        comparisons += comps_swaps[0]
+        swaps += comps_swaps[1]
+        
+        comps_swaps = quick_sort(alist, split + 1, last)
+        comparisons += comps_swaps[0]
+        swaps += comps_swaps[1]
+
+    print('Quick sort: {} comparisons, {} swaps'.format(comparisons, swaps))        
+    return (comparisons, swaps)
+    
+alist = [2, 4, 6, 8, 1, 3, 5, 7]
+quick_sort(alist)
 print(alist)
