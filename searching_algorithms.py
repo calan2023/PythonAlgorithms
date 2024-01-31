@@ -87,5 +87,28 @@ def binary_search(alist, target, low=None, high=None, comparisons=0):
     else:
         return binary_search(alist, target, midpoint+1, high, comparisons)
 
-alist = [1, 3, 5, 10, 12]
-binary_search(alist, 5)
+def hashtable_linearprobe_search(alist, target, table_size=11):
+    comparisons = 0
+    table = [None] * table_size
+    for item in alist:
+        hash_value = item % table_size
+        while table[hash_value] is not None:
+            hash_value = (hash_value + 1) % table_size
+        table[hash_value] = item
+        
+    target_hash_value = target % table_size
+    comparisons += 1
+    while table[target_hash_value] != target and table[target_hash_value] is not None:
+        target_hash_value = (target_hash_value + 1) % table_size
+        comparisons += 1
+
+    if table[target_hash_value] is None:
+        print('Hash Table Search: {} comparisons'.format(comparisons))
+        print('{} is not in the list'.format(target))
+    else:
+        print('Hash Table Search: {} comparisons'.format(comparisons))
+        print('{} is in the list'.format(target))        
+    print('Hash Table:', table)
+
+alist = [1, 3, 5, 10, 12, 14, 4]
+hashtable_linearprobe_search(alist, 0)
