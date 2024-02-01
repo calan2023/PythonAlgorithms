@@ -87,20 +87,52 @@ def binary_search(alist, target, low=None, high=None, comparisons=0):
     else:
         return binary_search(alist, target, midpoint+1, high, comparisons)
 
-def hashtable_linearprobe_search(alist, target, table_size=11):
+def hashtable_search(alist, target, table_type='Linear', table_size=11):
+    '''Creates a hash table with items in list and finds item through hashing.
+    
+    Args:
+        alist(list): The ordered list that will be searched
+        target (int): The item the function will search for
+        tabe_type (str): The type of collision resolution used on the hash table
+            (default is 'Linear')
+        table_size (int): The number of slots in the hash table
+            (default is 11)
+    '''
+    
     comparisons = 0
+    if len(alist) > table_size:
+        table_size = len(alist) + 2
     table = [None] * table_size
-    for item in alist:
-        hash_value = item % table_size
-        while table[hash_value] is not None:
-            hash_value = (hash_value + 1) % table_size
-        table[hash_value] = item
+    
+    if table_type == 'Linear':
+        for item in alist:
+            hash_value = item % table_size
+            while table[hash_value] is not None:
+                hash_value = (hash_value + 1) % table_size
+            table[hash_value] = item
         
-    target_hash_value = target % table_size
-    comparisons += 1
-    while table[target_hash_value] != target and table[target_hash_value] is not None:
-        target_hash_value = (target_hash_value + 1) % table_size
+        target_hash_value = target % table_size
         comparisons += 1
+        while table[target_hash_value] != target and table[target_hash_value] is not None:
+            target_hash_value = (target_hash_value + 1) % table_size
+            comparisons += 1
+            
+    elif table_type == 'Quadratic':
+        for item in alist:
+            i = 0
+            hash_value = (item + i**2) % table_size
+            while table[hash_value] is not None:
+                i += 1
+                hash_value = (hash_value + i**2) % table_size
+            table[hash_value] = item
+        
+        i = 0
+        target_hash_value = (target + i**2) % table_size
+        comparisons += 1
+        while table[target_hash_value] != target and table[target_hash_value] is not None:
+            i += 1
+            target_hash_value = (target_hash_value + i**2) % table_size
+            comparisons += 1
 
     if table[target_hash_value] is None:
         print('Hash Table Search: {} comparisons'.format(comparisons))
@@ -108,7 +140,7 @@ def hashtable_linearprobe_search(alist, target, table_size=11):
     else:
         print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is in the list'.format(target))        
-    print('Hash Table:', table)
+    print(f'Hash Table (Size {table_size}):\n{table}')
 
-alist = [1, 3, 5, 10, 12, 14, 4]
-hashtable_linearprobe_search(alist, 0)
+alist = [1, 3, 5, 10, 12, 14, 4, 23, 21, 2, 22, 90]
+hashtable_search(alist, 1000)
