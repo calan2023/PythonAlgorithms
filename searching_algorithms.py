@@ -134,13 +134,31 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
             target_hash_value = (target_hash_value + i**2) % table_size
             comparisons += 1
 
+    elif table_type == 'Chaining':
+        for item in alist:
+            hash_value = item % table_size
+            if table[hash_value] is not None:
+                table[hash_value] += [item]
+            else:
+                table[hash_value] = [item]
+
+        i = 0
+        target_hash_value = target % table_size
+        comparisons += 1
+        if table[target_hash_value] is not None:
+            comparisons += 1
+            while i <= len(table[target_hash_value]) - 1 and table[target_hash_value][i] != target:
+                i += 1
+                if i <= len(table[target_hash_value]) - 1:
+                    comparisons += 1
+
     if table[target_hash_value] is None:
         print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is not in the list'.format(target))
     else:
         print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is in the list'.format(target))        
-    print(f'Hash Table (Size {table_size}):\n{table}')
+    print('Hash Table (Size {}):\n{}'.format(table_size, table))
 
-alist = [1, 3, 5, 10, 12, 14, 4, 23, 21, 2, 22, 90]
-hashtable_search(alist, 1000)
+alist = [1, 3, 5, 10, 12, 14, 4, 23, 21, 2, 22]
+hashtable_search(alist, 60, 'Chaining')
