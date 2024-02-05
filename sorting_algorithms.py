@@ -1,3 +1,7 @@
+'''The module containing functions for the different kinds of sorting algorithms.
+All functions print the number of key comparisons and/or the number of swaps made.
+'''
+
 def selection_sort(alist):
     '''Performs a selection sort on a list.
 

@@ -1,3 +1,8 @@
+'''The module containing functions for the different kinds of searching algorithms.
+All functions prints whether the item is found or not found in the list and also
+the number of key comparisons made.
+'''
+
 def linear_search(alist, target):
     '''Performs a linear search on an unordered list.
 
@@ -100,8 +105,8 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
     '''
     
     comparisons = 0
-    if len(alist) > table_size:
-        table_size = len(alist) + 2
+    if len(alist) >= table_size:
+        table_size = len(alist) + 1
     table = [None] * table_size
     
     if table_type == 'Linear':
@@ -112,10 +117,18 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
             table[hash_value] = item
         
         target_hash_value = target % table_size
-        comparisons += 1
-        while table[target_hash_value] != target and table[target_hash_value] is not None:
-            target_hash_value = (target_hash_value + 1) % table_size
+        stop = False
+        while not stop:
             comparisons += 1
+            if table[target_hash_value] == target:
+                stop = True
+                found = True
+            else:
+                if table[target_hash_value] is None:
+                    stop = True
+                    found = False
+                else:
+                    target_hash_value = (target_hash_value + 1) % table_size
             
     elif table_type == 'Quadratic':
         for item in alist:
@@ -128,11 +141,19 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
         
         i = 0
         target_hash_value = (target + i**2) % table_size
-        comparisons += 1
-        while table[target_hash_value] != target and table[target_hash_value] is not None:
-            i += 1
-            target_hash_value = (target_hash_value + i**2) % table_size
+        stop = False
+        while not stop:
             comparisons += 1
+            if table[target_hash_value] == target:
+                stop = True
+                found = True
+            else:
+                if table[target_hash_value] is None:
+                    stop = True
+                    found = False
+                else:
+                    i += 1
+                    target_hash_value = (target + i**2) % table_size
 
     elif table_type == 'Chaining':
         for item in alist:
@@ -142,23 +163,31 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
             else:
                 table[hash_value] = [item]
 
-        i = 0
         target_hash_value = target % table_size
         comparisons += 1
-        if table[target_hash_value] is not None:
-            comparisons += 1
-            while i <= len(table[target_hash_value]) - 1 and table[target_hash_value][i] != target:
-                i += 1
-                if i <= len(table[target_hash_value]) - 1:
-                    comparisons += 1
-
-    if table[target_hash_value] is None:
+        if table[target_hash_value] is None:
+            found = False
+        else:
+            i = 0
+            stop = False
+            while not stop:
+                comparisons += 1
+                if table[target_hash_value][i] == target:
+                    stop = True
+                    found = True
+                else:
+                    i += 1
+                    if i == len(table[target_hash_value]):
+                        stop = True
+                        found = False
+                        
+    if found:
         print('Hash Table Search: {} comparisons'.format(comparisons))
-        print('{} is not in the list'.format(target))
+        print('{} is in the list'.format(target))    
     else:
         print('Hash Table Search: {} comparisons'.format(comparisons))
-        print('{} is in the list'.format(target))        
+        print('{} is not in the list'.format(target))
     print('Hash Table (Size {}):\n{}'.format(table_size, table))
 
 alist = [1, 3, 5, 10, 12, 14, 4, 23, 21, 2, 22]
-hashtable_search(alist, 60, 'Chaining')
+hashtable_search(alist, 21, 'Quadratic', 20)
