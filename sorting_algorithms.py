@@ -199,7 +199,3 @@ def quick_sort(alist, first=None, last=None):
 
     print('Quick sort: {} comparisons, {} swaps'.format(comparisons, swaps))        
     return (comparisons, swaps)
-    
-alist = [2, 4, 6, 8, 1, 3, 5, 7]
-quick_sort(alist)
-print(alist)

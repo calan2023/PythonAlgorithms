@@ -188,6 +188,3 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
         print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is not in the list'.format(target))
     print('Hash Table (Size {}):\n{}'.format(table_size, table))
-
-alist = [1, 3, 5, 10, 12, 14, 4, 23, 21, 2, 22]
-hashtable_search(alist, 21, 'Quadratic', 20)
