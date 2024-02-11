@@ -1,8 +1,18 @@
+'''The main module for running each sorting and searching algorithm using a list.
+'''
+
 import random
 from sorting_algorithms import *
 from searching_algorithms import *
 
 def random_list():
+    '''Generates a random list based on users input of smallest item, biggest item
+    and number of items in the list.
+
+    Returns:
+        alist (list): The random list created
+    '''
+    
     lower_bound = input("What is the smallest item you want in the list?: ")
     while not lower_bound.isnumeric():
         print("Invalid input. Try again")
@@ -28,6 +38,13 @@ def random_list():
     return alist
 
 def custom_list():
+    '''Generates a list with items the user inputs in. If user inputs 'D', the last
+    item in the list is deleted, and if user inputs 'Q', the created list is returned.
+
+    Returns:
+        alist (list): The custom list created
+    '''
+    
     alist = []
     stop = False
     while not stop:
@@ -48,6 +65,13 @@ def custom_list():
     return alist
 
 def sorting(alist):
+    '''Displays each sorting algorithm, gets user's choice and performs algorithm
+    on the list given to the function.
+
+    Args:
+        alist (list): The list that will be sorted
+    '''
+    
     print('''\nSorting Algorithms:
 1. Selection
 2. Bubble
@@ -74,6 +98,17 @@ def sorting(alist):
     print(alist)
 
 def searching(alist):
+    '''Checks if the list is in order. If list ordered, all algorithms are
+    displayed, if not, then two algorithms are displayed. Gets user's choice
+    and what item the user is looking for in the list and performs the
+    algorithm chosen. If algorithm chosen is a hash table search, then user
+    inputs what type of hash table they want to use and how many slots should
+    be in it.
+
+    Args:
+        alist (list): The list that will be searched
+    '''
+    
     ordered = True
     stop = False
     index = 1
@@ -171,6 +206,10 @@ def searching(alist):
                 hashtable_search(alist, target, 'Chaining', hashtable_size)
 
 def main():
+    '''The main module for running program. Gets user's choice of list and
+    creates it and gets user's choice of algorithm and runs it.
+    '''
+    
     print('''List Types:
 1. Random List
 2. Custom List''')
