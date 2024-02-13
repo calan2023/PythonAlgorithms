@@ -101,9 +101,7 @@ def searching(alist):
     '''Checks if the list is in order. If list ordered, all algorithms are
     displayed, if not, then two algorithms are displayed. Gets user's choice
     and what item the user is looking for in the list and performs the
-    algorithm chosen. If algorithm chosen is a hash table search, then user
-    inputs what type of hash table they want to use and how many slots should
-    be in it.
+    algorithm chosen.
 
     Args:
         alist (list): The list that will be searched
@@ -154,57 +152,47 @@ def searching(alist):
         elif searching_type == '3':
             binary_search(alist, target)
         elif searching_type == '4':
-            print('''\nHash Table Types:
-1. Linear
-2. Quadratic
-3. Chaining''')
-            hashtable_type = input("What type of hash table do you want to use?: ")
-            while hashtable_type not in ['1', '2', '3']:
-                print("Invalid input. Try again")
-                hashtable_type = input("What type of hash table do you want to use?: ")
-            hashtable_size = input("How many slots do you want your hash table to have?"\
-                                   "\n(Note: if number of slots is less than number of items "\
-                                   "in list, the program will automatically change number of slots"\
-                                   "to be equal to the number of items in list + 1): ")
-            while not hashtable_size.isnumeric():
-                print("Invalid input. Try again")
-                hashtable_size = input("How many slots do you want your hash table to have?: ")
-            hashtable_size = int(hashtable_size)
-            
-            if hashtable_type == '1':
-                hashtable_search(alist, target, 'Linear', hashtable_size)
-            elif hashtable_type == '2':
-                hashtable_search(alist, target, 'Quadratic', hashtable_size)
-            elif hashtable_type == '3':
-                hashtable_search(alist, target, 'Chaining', hashtable_size)
+            hashtable_creation(alist, target)
     else:
         if searching_type == '1':
             linear_search(alist, target)
         elif searching_type == '2':
-            print('''\nHash Table Types:
+            hashtable_creation(alist, target)
+
+def hashtable_creation(alist, target):
+    '''Gets user's choice of hash table type and how many slots the hash table
+    should have. Hash table is created using a list and target item is searched
+    for.
+
+    Args:
+        alist (list): The list that will be searched
+        target (int): The item the function will search for
+    '''
+    
+    print('''\nHash Table Types:
 1. Linear
 2. Quadratic
 3. Chaining''')
-            hashtable_type = input("What type of hash table do you want to use?: ")
-            while hashtable_type not in ['1', '2', '3']:
-                print("Invalid input. Try again")
-                hashtable_type = input("What type of hash table do you want to use?: ")
-            hashtable_size = input("How many slots do you want your hash table to have?"\
-                                   "\n(Note: if number of slots is less than number of items "\
-                                   "in list, the program will automatically change number of slots"\
-                                   "to be equal to the number of items in list + 1): ")
-            while not hashtable_size.isnumeric():
-                print("Invalid input. Try again")
-                hashtable_size = input("How many slots do you want your hash table to have?: ")
-            hashtable_size = int(hashtable_size)
+    hashtable_type = input("What type of hash table do you want to use?: ")
+    while hashtable_type not in ['1', '2', '3']:
+        print("Invalid input. Try again")
+        hashtable_type = input("What type of hash table do you want to use?: ")
+    hashtable_size = input("How many slots do you want your hash table to have?"\
+                            "\n(Note: if number of slots is less than number of items "\
+                            "in list, the program will automatically change number of slots"\
+                            "to be equal to the number of items in list + 1): ")
+    while not hashtable_size.isnumeric():
+        print("Invalid input. Try again")
+        hashtable_size = input("How many slots do you want your hash table to have?: ")
+    hashtable_size = int(hashtable_size)
             
-            if hashtable_type == '1':
-                hashtable_search(alist, target, 'Linear', hashtable_size)
-            elif hashtable_type == '2':
-                hashtable_search(alist, target, 'Quadratic', hashtable_size)
-            elif hashtable_type == '3':
-                hashtable_search(alist, target, 'Chaining', hashtable_size)
-
+    if hashtable_type == '1':
+        hashtable_search(alist, target, 'Linear', hashtable_size)
+    elif hashtable_type == '2':
+        hashtable_search(alist, target, 'Quadratic', hashtable_size)
+    elif hashtable_type == '3':
+        hashtable_search(alist, target, 'Chaining', hashtable_size)
+    
 def main():
     '''The main module for running program. Gets user's choice of list and
     creates it and gets user's choice of algorithm and runs it.
