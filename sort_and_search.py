@@ -83,6 +83,7 @@ def sorting(alist):
     while sorting_type not in ['1', '2', '3', '4', '5', '6']:
         print("Invalid input. Try again")
         sorting_type = input("What type of sorting algorithm do you want to use?: ")
+    print()
     if sorting_type == '1':
         selection_sort(alist)
     elif sorting_type == '2':
@@ -95,7 +96,7 @@ def sorting(alist):
         merge_sort(alist)
     elif sorting_type == '6':
         quick_sort(alist)
-    print(alist)
+    print("Sorted List:", alist)
 
 def searching(alist):
     '''Checks if the list is in order. If list ordered, all algorithms are
@@ -143,6 +144,7 @@ def searching(alist):
         print("Invalid input. Try again")
         target = input("What item do you want to find in the list?: ")
     target = int(target)
+    print()
 
     if ordered:
         if searching_type == '1':
@@ -169,7 +171,7 @@ def hashtable_creation(alist, target):
         target (int): The item the function will search for
     '''
     
-    print('''\nHash Table Types:
+    print('''Hash Table Types:
 1. Linear
 2. Quadratic
 3. Chaining''')
@@ -179,13 +181,14 @@ def hashtable_creation(alist, target):
         hashtable_type = input("What type of hash table do you want to use?: ")
     hashtable_size = input("How many slots do you want your hash table to have?"\
                             "\n(Note: if number of slots is less than number of items "\
-                            "in list, the program will automatically change number of slots"\
+                            "in list, the program will automatically change number of slots "\
                             "to be equal to the number of items in list + 1): ")
     while not hashtable_size.isnumeric():
         print("Invalid input. Try again")
         hashtable_size = input("How many slots do you want your hash table to have?: ")
     hashtable_size = int(hashtable_size)
-            
+    print()
+    
     if hashtable_type == '1':
         hashtable_search(alist, target, 'Linear', hashtable_size)
     elif hashtable_type == '2':
@@ -195,33 +198,51 @@ def hashtable_creation(alist, target):
     
 def main():
     '''The main module for running program. Gets user's choice of list and
-    creates it and gets user's choice of algorithm and runs it.
+    creates it, gets user's choice of algorithm and runs it, and gets user's
+    choice of continuing with same list, creating a new list or quitting.
     '''
     
-    print('''List Types:
+    running = True
+    while running:
+        print('''List Types:
 1. Random List
 2. Custom List''')
-    list_type = input("What type of list do you want to make?: ")
-    while list_type not in ['1', '2']:
-        print("Invalid input. Try again")
-        list_type = input("What type of list do you want to make?: ")      
-    if list_type == '1':
-        alist = random_list()
-    elif list_type == '2':
-        alist = custom_list()
-    print(alist)
-    
-    print('''\nAlgorithm Types:
+        list_type = input("What type of list do you want to make?: ")
+        while list_type not in ['1', '2']:
+            print("Invalid input. Try again")
+            list_type = input("What type of list do you want to make?: ")      
+        if list_type == '1':
+            alist = random_list()
+        elif list_type == '2':
+            alist = custom_list()
+
+        stop = False
+        while not stop:
+            print("\nCurrent List:", alist)
+            print('''Algorithm Types:
 1. Sorting
 2. Searching''')
-    algorithm_type = input("What type of algorithm do you want to use?: ")
-    while algorithm_type not in ['1', '2']:
-        print("Invalid input. Try again")
-        algorithm_type = input("What type of algorithm do you want to use?: ")
-    if algorithm_type == '1':
-        sorting(alist)
-    elif algorithm_type == '2':
-        searching(alist)
+            algorithm_type = input("What type of algorithm do you want to use?: ")
+            while algorithm_type not in ['1', '2']:
+                print("Invalid input. Try again")
+                algorithm_type = input("What type of algorithm do you want to use?: ")
+            if algorithm_type == '1':
+                sorting(alist[:])
+            elif algorithm_type == '2':
+                searching(alist)
+                
+            again = input("\nWould you like to use the same list again? 'Y' = yes, "\
+                          "'N' = no, or 'Q' = quit: ")
+            while again not in ['Y', 'y', 'N', 'n', 'Q', 'q']:
+                print("Invalid input. Try again")
+                again = input("Would you like to use the same list again? 'Y' = yes, "\
+                          "'N' = no, or 'Q' = quit: ")
+            if again in ['N', 'n']:
+                stop = True
+                print()
+            elif again in ['Q', 'q']:
+                stop = True
+                running = False
 
 if __name__ == '__main__':
     main()
