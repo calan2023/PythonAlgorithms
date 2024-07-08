@@ -136,7 +136,7 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
             hash_value = (item + i**2) % table_size
             while table[hash_value] is not None:
                 i += 1
-                hash_value = (hash_value + i**2) % table_size
+                hash_value = (item + i**2) % table_size
             table[hash_value] = item
         
         i = 0
@@ -181,10 +181,9 @@ def hashtable_search(alist, target, table_type='Linear', table_size=11):
                         stop = True
                         found = False
                         
+    print('Hash Table Search: {} comparisons'.format(comparisons))
     if found:
-        print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is in the list'.format(target))    
     else:
-        print('Hash Table Search: {} comparisons'.format(comparisons))
         print('{} is not in the list'.format(target))
     print('Hash Table (Size {}):\n{}'.format(table_size, table))
