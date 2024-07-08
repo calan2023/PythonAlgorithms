@@ -212,7 +212,7 @@ def counting_sort(alist, key=lambda x: x):
 
     Args:
         alist (list): The list that will be sorted
-        key (function: The key that the items in the list will be sorted by
+        key (function): The key that the items in the list will be sorted by
 
     Returns:
         sorted_list (list): The sorted list
@@ -238,4 +238,25 @@ def counting_sort(alist, key=lambda x: x):
         positions_list[key(item)] += 1
         
     print('Counting sort: 0 comparisons, 0 swaps')
+    return sorted_list
+
+def radix_sort(alist):
+    '''Performs a radix sort on a list using counting sort
+
+    Args:
+        alist (list): The list that will be sorted
+
+    Returns:
+        sorted_list (list): The sorted list
+    '''
+    
+    num_lengths = [len(str(item)) for item in alist]
+    max_num_length = max(num_lengths)
+    sorted_list = alist
+    
+    for i in range(1, max_num_length+1):
+        key = lambda x: int(str(x)[-i]) if i <= len(str(x)) else 0
+        sorted_list = counting_sort(sorted_list, key)
+
+    print('Radix sort: 0 comparisons, 0 swaps')
     return sorted_list

@@ -79,9 +79,10 @@ def sorting(alist):
 4. Shell
 5. Merge
 6. Quick
-7. Counting''')
+7. Counting
+8. Radix''')
     sorting_type = input("What type of sorting algorithm do you want to use?: ")
-    while sorting_type not in ['1', '2', '3', '4', '5', '6', '7']:
+    while sorting_type not in ['1', '2', '3', '4', '5', '6', '7', '8']:
         print("Invalid input. Try again")
         sorting_type = input("What type of sorting algorithm do you want to use?: ")
     print()
@@ -99,6 +100,8 @@ def sorting(alist):
         quick_sort(alist)
     elif sorting_type == '7':
         alist = counting_sort(alist)
+    elif sorting_type == '8':
+        alist = radix_sort(alist)
     print("Sorted List:", alist)
 
 def searching(alist):
