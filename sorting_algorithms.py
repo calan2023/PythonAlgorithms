@@ -100,6 +100,9 @@ def merge_sort(alist):
 
     Args:
         alist (list): The list that will be sorted
+
+    Returns:
+        comparisons (int): The number of comparisons made to sort the list
     '''
 
     comparisons = 0
@@ -145,6 +148,10 @@ def quick_sort(alist, first=None, last=None):
             (default is None)
         last (int): The index of the last item in the list slice
             (default is None)
+
+    Returns:
+        (comparisons, swaps) (tuple): A tuple containing the number of comparisons
+        and the number of swaps made to sort the list
     '''
     
     comparisons = 0
@@ -199,3 +206,36 @@ def quick_sort(alist, first=None, last=None):
 
     print('Quick sort: {} comparisons, {} swaps'.format(comparisons, swaps))        
     return (comparisons, swaps)
+
+def counting_sort(alist, key=lambda x: x):
+    '''Performs a counting sort on a list
+
+    Args:
+        alist (list): The list that will be sorted
+        key (function: The key that the items in the list will be sorted by
+
+    Returns:
+        sorted_list (list): The sorted list
+    '''
+    
+    sorted_list = [None] * len(alist)
+    key_values = [key(item) for item in alist]
+    max_key_value = max(key_values)
+    positions_list = [0] * (max_key_value+1)
+    
+    for item in alist:
+        positions_list[key(item)] += 1
+    
+    running_sum = 0
+    for i in range(max_key_value+1):
+        count = positions_list[i]
+        positions_list[i] = running_sum
+        running_sum += count
+    
+    for item in alist:
+        item_position = positions_list[key(item)]
+        sorted_list[item_position] = item
+        positions_list[key(item)] += 1
+        
+    print('Counting sort: 0 comparisons, 0 swaps')
+    return sorted_list
